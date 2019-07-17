@@ -1,6 +1,6 @@
 var app = require('express')();
 var http = require('http').createServer(app);
-var io = require('socket.io')(http, { path : '/socket.io' });
+var io = require('socket.io')(http);
 
 io.on('connection', function(socket) {
   console.log('a user connected');
@@ -18,6 +18,8 @@ io.on('connection', function(socket) {
     io.emit('chat message', msg);
   });
 });
+
+io.listen(http);
 
 app.get('/', (req, res) => {
   res.send('Hello there');

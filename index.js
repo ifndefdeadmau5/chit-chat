@@ -19,10 +19,11 @@ io.on('connection', function(socket) {
   });
 });
 
-io.listen(http);
 
 app.get('/', (req, res) => {
   res.send('Hello there');
 })
 
-http.listen(5050, '127.0.0.1');
+http.listen(3333, function(){
+  console.log('listening on *:3333');
+});

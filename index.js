@@ -19,6 +19,10 @@ io.on('connection', function(socket) {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello there');
+})
+
 http.listen(3000, function() {
   console.log('listening on *:3000');
 });

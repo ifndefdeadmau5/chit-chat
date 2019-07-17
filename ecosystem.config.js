@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'bb-user-api',
+      name: 'chit-chat',
       script: 'npm',
       args: 'start',
       env: {

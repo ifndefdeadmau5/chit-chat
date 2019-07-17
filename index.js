@@ -1,6 +1,6 @@
 var app = require('express')();
 var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, { path : '/socket.io' });
 
 io.on('connection', function(socket) {
   console.log('a user connected');

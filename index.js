@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
-http.listen(3333, function() {
+http.listen(process.env.PORT, function() {
   console.log('listening on *:3333');
 });
 

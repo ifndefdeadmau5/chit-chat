@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
-http.listen(3333, function() {
+http.listen(process.env.PORT, function() {
   console.log('listening on *:3333');
 });
 
@@ -12,14 +12,23 @@ var numUsers = 0;
 io.on('connection', socket => {
   var addedUser = false;
 
-  // when the client emits 'new message', this listens and executes
-  socket.on('new message', data => {
-    // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data,
-    });
+  // once a client has connected, we expect to get a ping from them saying what room they want to join
+  socket.on('join', function({ username, room }) {
+    console.log(username, ' joined')
+    socket.join(room);
+
+    setInterval(() => {
+      io.to('Default').emit('new message', 'come on');  
+    }, 1000)
   });
+  
+  // when the client emits 'new message', this listens and executes
+  socket.on('new room message', ({ room, message }) => {
+    console.log('Got new message')
+    console.log(room)
+    console.log(message)
+    io.to(room).emit('new room message', { username: socket.username, message });
+  })
   // when the client emits 'add user', this listens and executes
   socket.on('add user', username => {
     if (addedUser) return;
